@@ -5979,7 +5979,13 @@ d3.layout.hierarchy = function() {
   function recurse(data, depth, nodes) {
     var childs = children.call(hierarchy, data, depth),
         node = d3_layout_hierarchyInline ? data : {data: data};
-    node.depth = depth;
+
+    if (typeof data.level === "undefined") {
+      node.depth = depth;
+    } else {
+      node.depth = data.level;
+    }
+
     nodes.push(node);
     if (childs && (n = childs.length)) {
       var i = -1,
